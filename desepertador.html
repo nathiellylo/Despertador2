@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despertador com Som</title>
+</head>
+<body>
+    <center>
+    <div id="clock" style="font-size: 3rem; text-align: center;"></div>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    
+    
+        .time {
+            font-size: 3rem;
+        }
+
+
+        
+    </style>
+    <title>Relógio em JavaScript</title>
+    </head>
+    <body>
+    <div class="clock-box">
+        <div class="time" id="clock"></div>
+    </div>
+    
+    
+    
+    <h3>Despertador com som</h3>
+
+    <script>
+        //definição de uma função (updateTime) 
+        function updateTime() {
+
+         //criação da variável constante (now) + valor atrelado a ela (new Date)
+         const now = new Date();
+
+         //criação da variável constante (hours) + 
+           const hours = now.getHours().toString().padStart(2, "0");
+
+            //criação da variável constante (minutes) + 
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+
+             //criação da variável constante (seconds) + 
+            const seconds = now.getSeconds().toString().padStart(2, "0");
+            
+             //criação da variável constante (timeString) + 
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById("clock").textContent = timeString;
+        }
+
+        setInterval(updateTime, 1000);
+    </script>
+
+    <label for="alarmTime">Horário do Alarme: </label>
+    <input type="time" id="alarmTime"><br><br>
+    <button id="setAlarmBtn">Definir Alarme</button>
+</center>
+
+
+    <script>
+        /**definição de variável constante, não podendo ser retribuídas após sua primeira atribuição (etAlarmBtn)
+       + armazenação do elemento HTML com ID = "SetAlarmBnt" na varável definida, através do document, que representa 
+       todo o conteúdo da timeLime e o GetElementId, que usa do ID para a armazenação**/
+       const setAlarmBtn = document.getElementById("setAlarmBtn");
+
+        /**definição de variável constante, não podendo ser retribuídas após sua primeira atribuição (alarmTimeInput)
+       + armazenação do elemento HTML com ID = "alarmTimeInput" na varável definida, através do document, que representa 
+       todo o conteúdo da timeLime e o GetElementId, que usa do ID para a armazenação**/
+        const alarmTimeInput = document.getElementById("alarmTime");
+
+        //definição de variável do tipo let(etAlarmBtn)
+        let alarmTimeout;
+
+    
+    // Adiciona um ouvinte de evento de clique ao botão com o ID "setAlarmBtn".
+    setAlarmBtn.addEventListener("click", () => {
+        
+    // Obtém o valor do campo de entrada de tempo do alarme.
+    const alarmTime = alarmTimeInput.value;
+
+    // Verifica se o tempo do alarme está definido.
+    if (alarmTime) {
+
+    // Divide o tempo do alarme em horas e minutos.
+    const [hours, minutes] = alarmTime.split(":");
+
+    // Cria um objeto Date para o tempo atual.
+    const currentTime = new Date();
+
+        
+    // Cria um objeto Date para a data e hora do alarme.
+    const alarmDate = new Date(
+    currentTime.getFullYear(),   // Obtém o ano atual.
+    currentTime.getMonth(),      // Obtém o mês atual (0 a 11).
+    currentTime.getDate(),       // Obtém o dia do mês atual.
+    parseInt(hours),             // Obtém as horas definidas para o alarme.
+    parseInt(minutes),           // Obtém os minutos definidos para o alarme.
+    0                           // Define os segundos para 0 (começo do minuto).
+);
+
+        // Cria um objeto Date para o tempo atual.
+        const now = new Date();
+
+        // Calcula o tempo restante até o alarme em milissegundos.
+        let timeUntilAlarm = alarmDate - now;
+
+        // Verifica se o tempo até o alarme é negativo (alarme para o dia seguinte).
+        if (timeUntilAlarm < 0) {
+            // Define a data do alarme para o dia seguinte.
+            alarmDate.setDate(alarmDate.getDate() + 1);
+
+            // Calcula novamente o tempo restante até o alarme.
+            timeUntilAlarm = alarmDate - now;
+        }
+
+        // Limpa qualquer timeout de alarme existente.
+        clearTimeout(alarmTimeout);
+
+        // Define um novo timeout para acionar o alarme no momento apropriado.
+        alarmTimeout = setTimeout(() => {
+            // Chama a função para reproduzir o alarme.
+            playAlarm();
+        }, timeUntilAlarm);
+    }
+});
+
+        //definição da função playAlarme(tocar alarme)
+        function playAlarm() {
+
+            //declaração de variável constante (audio)
+            const audio = new Audio("Alarm01.wav\audios");
+
+            audio.play();
+
+            //exibição de um alerta, com a mensagem "Hora do alarme!"
+            alert("Hora do alarme!");
+        }
+    </script>
+
+
+<script>
+   // Define uma função chamada updateTime.
+  function updateTime() {
+    
+    // Cria um objeto Date para o momento atual.
+    const now = new Date();
+
+    // Obtém as horas do objeto Date e formata-as como uma string de duas posições com zeros à esquerda se necessário.
+    const hours = now.getHours().toString().padStart(2, "0");
+
+    // Obtém os minutos do objeto Date e formata-os como uma string de duas posições com zeros à esquerda se necessário.
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+
+    // Obtém os segundos do objeto Date e formata-os como uma string de duas posições com zeros à esquerda se necessário.
+    const seconds = now.getSeconds().toString().padStart(2, "0");
+
+    // Cria uma string no formato "horas:minutos:segundos".
+    const timeString = `${hours}:${minutes}:${seconds}`;
+
+    // Atualiza o conteúdo do elemento HTML com o ID "clock" com a string de tempo formatada.
+    document.getElementById("clock").textContent = timeString;
+}
+
+
+    updateTime(); // Atualizar em tempo real
+    setInterval(updateTime, 1000); // Atualizar todo segundo
+</script
+</body>
+</html>
